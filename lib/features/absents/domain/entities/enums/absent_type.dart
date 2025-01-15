@@ -1,0 +1,4 @@
+enum AbsentType {
+  sickness,
+  vacation,
+}
