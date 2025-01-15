@@ -1,0 +1,4 @@
+enum AbsentTypeDTO {
+  sickness,
+  vacation,
+}
