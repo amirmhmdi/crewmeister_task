@@ -15,5 +15,5 @@ AbsencesListModel _$AbsencesListModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$AbsencesListModelToJson(AbsencesListModel instance) =>
     <String, dynamic>{
       'message': instance.message,
-      'payload': instance.payload,
+      'payload': instance.payload.toJson(),
     };

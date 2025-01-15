@@ -15,5 +15,5 @@ MembersListModel _$MembersListModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$MembersListModelToJson(MembersListModel instance) =>
     <String, dynamic>{
       'message': instance.message,
-      'payload': instance.payload,
+      'payload': instance.payload.toJson(),
     };
