@@ -9,11 +9,13 @@ part of 'absences_list_model.dart';
 AbsencesListModel _$AbsencesListModelFromJson(Map<String, dynamic> json) =>
     AbsencesListModel(
       message: json['message'] as String,
-      payload: AbsenceModel.fromJson(json['payload'] as Map<String, dynamic>),
+      payload: (json['payload'] as List<dynamic>)
+          .map((e) => AbsenceModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$AbsencesListModelToJson(AbsencesListModel instance) =>
     <String, dynamic>{
       'message': instance.message,
-      'payload': instance.payload.toJson(),
+      'payload': instance.payload.map((e) => e.toJson()).toList(),
     };

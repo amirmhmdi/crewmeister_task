@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 
 class MembersList extends Equatable {
   final String message;
-  final Member payload;
+  final List<Member> payload;
 
   const MembersList({
     required this.message,

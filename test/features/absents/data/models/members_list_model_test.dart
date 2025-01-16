@@ -9,7 +9,7 @@ void main() {
   group('MembersListModel', () {
     final membersListJson = {
       'message': 'Success',
-      'payload': memberModeljson,
+      'payload': [memberModeljson],
     };
 
     final memberModel = MemberModel(
@@ -22,15 +22,15 @@ void main() {
 
     final membersListModel = MembersListModel(
       message: 'Success',
-      payload: memberModel,
+      payload: [memberModel],
     );
 
     test('should correctly deserialize from JSON', () {
       final result = MembersListModel.fromJson(membersListJson);
 
       expect(result.message, 'Success');
-      expect(result.payload.crewId, 1);
-      expect(result.payload.name, 'John Doe');
+      expect(result.payload.length, 1);
+      expect(result.payload.first.name, 'John Doe');
     });
 
     test('should correctly serialize to JSON', () {
@@ -44,8 +44,8 @@ void main() {
 
       expect(domainResult, isA<MembersList>());
       expect(domainResult.message, 'Success');
-      expect(domainResult.payload.id, 101);
-      expect(domainResult.payload.name, 'John Doe');
+      expect(domainResult.payload.length, 1);
+      expect(domainResult.payload.first.name, 'John Doe');
     });
   });
 }

@@ -16,29 +16,29 @@ void main() {
       // Arrange
       final membersList = MembersList(
         message: 'Success',
-        payload: member,
+        payload: [member],
       );
 
       // Assert
       expect(membersList.message, 'Success');
-      expect(membersList.payload, member);
+      expect(membersList.payload, [member]);
     });
 
     test('should support equality comparison', () {
       // Arrange
       final membersList1 = MembersList(
         message: 'Success',
-        payload: member,
+        payload: [member],
       );
 
       final membersList2 = MembersList(
         message: 'Success',
-        payload: member,
+        payload: [member],
       );
 
       final membersList3 = MembersList(
         message: 'Failed',
-        payload: member,
+        payload: [member],
       );
 
       // Assert
@@ -50,11 +50,11 @@ void main() {
       // Arrange
       final membersList = MembersList(
         message: 'Success',
-        payload: member,
+        payload: [member],
       );
 
       // Assert
-      expect(membersList.props, ['Success', member]);
+      expect(membersList.props, ['Success', [member]]);
     });
   });
 }

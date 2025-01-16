@@ -9,11 +9,13 @@ part of 'members_list_model.dart';
 MembersListModel _$MembersListModelFromJson(Map<String, dynamic> json) =>
     MembersListModel(
       message: json['message'] as String,
-      payload: MemberModel.fromJson(json['payload'] as Map<String, dynamic>),
+      payload: (json['payload'] as List<dynamic>)
+          .map((e) => MemberModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$MembersListModelToJson(MembersListModel instance) =>
     <String, dynamic>{
       'message': instance.message,
-      'payload': instance.payload.toJson(),
+      'payload': instance.payload.map((e) => e.toJson()).toList(),
     };

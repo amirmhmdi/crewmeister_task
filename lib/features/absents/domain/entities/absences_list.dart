@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 
 class AbsencesList extends Equatable {
   final String message;
-  final Absence payload;
+  final List<Absence> payload;
 
   const AbsencesList({
     required this.message,

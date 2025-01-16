@@ -9,22 +9,22 @@ void main() {
   group('AbsencesListModel', () {
     final absencesListJson = {
       'message': 'Success',
-      'payload': absenceModelJson,
+      'payload': [absenceModelJson],
     };
 
     final absenceModel = AbsenceModel.fromJson(absenceModelJson);
 
     final absencesListModel = AbsencesListModel(
       message: 'Success',
-      payload: absenceModel,
+      payload: [absenceModel],
     );
 
     test('should correctly deserialize from JSON', () {
       final result = AbsencesListModel.fromJson(absencesListJson);
 
       expect(result.message, 'Success');
-      expect(result.payload.admitterId, '123');
-      expect(result.payload.type, AbsentTypeDTO.sickness);
+      expect(result.payload.length, 1);
+      expect(result.payload.first.type, AbsentTypeDTO.sickness);
     });
 
     test('should correctly serialize to JSON', () {
@@ -37,8 +37,8 @@ void main() {
       final domainResult = absencesListModel.toDomain();
 
       expect(domainResult.message, 'Success');
-      expect(domainResult.payload.id, 101);
-      expect(domainResult.payload.admitterNote, 'Approved leave');
+      expect(domainResult.payload.length, 1);
+      expect(domainResult.payload.first.admitterNote, 'Approved leave');
     });
   });
 }

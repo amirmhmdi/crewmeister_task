@@ -24,28 +24,28 @@ void main() {
 
     final absencesList = AbsencesList(
       message: 'Success',
-      payload: absence,
+      payload: [absence],
     );
 
     test('should create an AbsencesList instance correctly', () {
       expect(absencesList.message, 'Success');
-      expect(absencesList.payload, absence);
+      expect(absencesList.payload, [absence]);
     });
 
     test('should support equality comparison', () {
       final absencesList1 = AbsencesList(
         message: 'Success',
-        payload: absence,
+        payload: [absence],
       );
 
       final absencesList2 = AbsencesList(
         message: 'Success',
-        payload: absence,
+        payload: [absence],
       );
 
       final absencesList3 = AbsencesList(
         message: 'Failed',
-        payload: absence,
+        payload: [absence],
       );
 
       expect(absencesList1, equals(absencesList2)); 
@@ -53,7 +53,7 @@ void main() {
     });
 
     test('should return correct props for Equatable', () {
-      expect(absencesList.props, ['Success', absence]);
+      expect(absencesList.props, ['Success', [absence]]);
     });
   });
 }
