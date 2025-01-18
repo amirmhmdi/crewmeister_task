@@ -57,14 +57,14 @@ class AbsenceModel {
     return Absence(
       admitterId: admitterId,
       admitterNote: admitterNote,
-      confirmedAt: confirmedAt,
-      createdAt: createdAt,
+      confirmedAt: parseNullableDate(confirmedAt),
+      createdAt: parseNonNullableDate(createdAt),
       crewId: crewId,
-      endDate: endDate,
+      endDate: parseNonNullableDate(endDate),
       id: id,
       memberNote: memberNote,
-      rejectedAt: rejectedAt,
-      startDate: startDate,
+      rejectedAt: parseNullableDate(rejectedAt),
+      startDate: parseNonNullableDate(startDate),
       type: _dTOtoAbsentType(type),
       userId: userId,
       absentStatus: _dTOtoAbsentStatus(absentStatusDTO),
@@ -88,6 +88,30 @@ class AbsenceModel {
         return AbsentType.vacation;
       case AbsentTypeDTO.sickness:
         return AbsentType.sickness;
+    }
+  }
+
+  // Possible solution to Not using two function
+  // T? safeParseDate<T>(String? dateString) {
+  //   if (dateString == null) return null as T?;
+  //   try {
+  //     return DateTime.parse(dateString) as T?;
+  //   } catch (e) {
+  //     return null as T?;
+  //   }
+  // }
+
+  DateTime parseNonNullableDate(String dateString) {
+    return DateTime.parse(dateString);
+  }
+
+  DateTime? parseNullableDate(String? dateString) {
+    if (dateString == null) return null;
+
+    try {
+      return DateTime.parse(dateString);
+    } catch (e) {
+      return null;
     }
   }
 }

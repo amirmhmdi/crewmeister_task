@@ -80,14 +80,14 @@ void main() {
 
       expect(absence.admitterId, '123');
       expect(absence.admitterNote, 'Approved leave');
-      expect(absence.confirmedAt, '2025-01-01');
-      expect(absence.createdAt, '2025-01-01');
+      expect(absence.confirmedAt, DateTime.parse('2025-01-01'));
+      expect(absence.createdAt, DateTime.parse('2025-01-01'));
       expect(absence.crewId, 1);
-      expect(absence.endDate, '2025-01-10');
+      expect(absence.endDate, DateTime.parse('2025-01-10'));
       expect(absence.id, 101);
       expect(absence.memberNote, 'Feeling unwell');
       expect(absence.rejectedAt, isNull);
-      expect(absence.startDate, '2025-01-05');
+      expect(absence.startDate, DateTime.parse('2025-01-05'));
       expect(absence.type, AbsentType.sickness);
       expect(absence.userId, 202);
       expect(absence.absentStatus, AbsentStatus.confirmed);

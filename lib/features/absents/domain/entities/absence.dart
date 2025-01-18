@@ -1,23 +1,25 @@
 import 'package:crewmeister_task/features/absents/domain/entities/enums/absent_status.dart';
 import 'package:crewmeister_task/features/absents/domain/entities/enums/absent_type.dart';
+import 'package:crewmeister_task/features/absents/domain/entities/member.dart';
 import 'package:equatable/equatable.dart';
 
 class Absence extends Equatable {
   final String? admitterId;
   final String admitterNote;
-  final String? confirmedAt;
-  final String createdAt;
+  final DateTime? confirmedAt;
+  final DateTime createdAt;
   final int crewId;
-  final String endDate;
+  final DateTime endDate;
   final int id;
   final String memberNote;
-  final String? rejectedAt;
-  final String startDate;
+  final DateTime? rejectedAt;
+  final DateTime startDate;
   final AbsentType type;
   final int userId;
   final AbsentStatus absentStatus;
+  Member? memberInfo;
 
-  const Absence({
+  Absence({
     required this.admitterId,
     required this.admitterNote,
     required this.confirmedAt,

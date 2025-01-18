@@ -9,14 +9,14 @@ void main() {
     final absence = Absence(
       admitterId: '123',
       admitterNote: 'Approved leave',
-      confirmedAt: '2025-01-01',
-      createdAt: '2025-01-01',
+      confirmedAt: DateTime.parse('2025-01-01'),
+      createdAt: DateTime.parse('2025-01-01'),
       crewId: 1,
-      endDate: '2025-01-10',
+      endDate: DateTime.parse('2025-01-10'),
       id: 101,
       memberNote: 'Feeling unwell',
       rejectedAt: null,
-      startDate: '2025-01-05',
+      startDate: DateTime.parse('2025-01-05'),
       type: AbsentType.sickness,
       userId: 202,
       absentStatus: AbsentStatus.confirmed,
@@ -48,12 +48,15 @@ void main() {
         payload: [absence],
       );
 
-      expect(absencesList1, equals(absencesList2)); 
-      expect(absencesList1, isNot(equals(absencesList3))); 
+      expect(absencesList1, equals(absencesList2));
+      expect(absencesList1, isNot(equals(absencesList3)));
     });
 
     test('should return correct props for Equatable', () {
-      expect(absencesList.props, ['Success', [absence]]);
+      expect(absencesList.props, [
+        'Success',
+        [absence]
+      ]);
     });
   });
 }
