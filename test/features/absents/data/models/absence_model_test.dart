@@ -12,7 +12,7 @@ void main() {
     test('should correctly deserialize from JSON', () {
       final absenceModel = AbsenceModel.fromJson(absenceModelJson);
 
-      expect(absenceModel.admitterId, '123');
+      expect(absenceModel.admitterId, 123);
       expect(absenceModel.admitterNote, 'Approved leave');
       expect(absenceModel.confirmedAt, '2025-01-01');
       expect(absenceModel.createdAt, '2025-01-01');
@@ -28,7 +28,7 @@ void main() {
 
     test('should correctly serialize to JSON', () {
       final absenceModel = AbsenceModel(
-        admitterId: '123',
+        admitterId: 123,
         admitterNote: 'Approved leave',
         confirmedAt: '2025-01-01',
         createdAt: '2025-01-01',
@@ -78,7 +78,7 @@ void main() {
 
       final absence = absenceModel.toDomain();
 
-      expect(absence.admitterId, '123');
+      expect(absence.admitterId, 123);
       expect(absence.admitterNote, 'Approved leave');
       expect(absence.confirmedAt, DateTime.parse('2025-01-01'));
       expect(absence.createdAt, DateTime.parse('2025-01-01'));

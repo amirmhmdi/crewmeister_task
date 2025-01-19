@@ -1,5 +1,5 @@
 const Map<String, Object?> absenceModelJson = {
-  'admitterId': '123',
+  'admitterId': 123,
   'admitterNote': 'Approved leave',
   'confirmedAt': '2025-01-01',
   'createdAt': '2025-01-01',

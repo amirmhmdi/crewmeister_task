@@ -4,7 +4,7 @@ import 'package:crewmeister_task/features/absents/domain/entities/member.dart';
 import 'package:equatable/equatable.dart';
 
 class Absence extends Equatable {
-  final String? admitterId;
+  final int? admitterId;
   final String admitterNote;
   final DateTime? confirmedAt;
   final DateTime createdAt;

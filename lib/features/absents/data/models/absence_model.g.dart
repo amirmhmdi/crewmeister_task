@@ -7,7 +7,7 @@ part of 'absence_model.dart';
 // **************************************************************************
 
 AbsenceModel _$AbsenceModelFromJson(Map<String, dynamic> json) => AbsenceModel(
-      admitterId: json['admitterId'] as String?,
+      admitterId: json['admitterId'] != null ? (json['admitterId'] as num).toInt() : null,
       admitterNote: json['admitterNote'] as String,
       confirmedAt: json['confirmedAt'] as String?,
       createdAt: json['createdAt'] as String,
@@ -21,8 +21,7 @@ AbsenceModel _$AbsenceModelFromJson(Map<String, dynamic> json) => AbsenceModel(
       userId: (json['userId'] as num).toInt(),
     );
 
-Map<String, dynamic> _$AbsenceModelToJson(AbsenceModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$AbsenceModelToJson(AbsenceModel instance) => <String, dynamic>{
       'admitterId': instance.admitterId,
       'admitterNote': instance.admitterNote,
       'confirmedAt': instance.confirmedAt,

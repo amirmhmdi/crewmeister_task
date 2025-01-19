@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('Absence', () {
     final absence = Absence(
-      admitterId: '123',
+      admitterId: 123,
       admitterNote: 'Approved leave',
       confirmedAt: DateTime.parse('2025-01-01'),
       createdAt: DateTime.parse('2025-01-01'),
@@ -22,7 +22,7 @@ void main() {
     );
 
     test('should create an Absence instance correctly', () {
-      expect(absence.admitterId, '123');
+      expect(absence.admitterId, 123);
       expect(absence.admitterNote, 'Approved leave');
       expect(absence.confirmedAt, DateTime.parse('2025-01-01'));
       expect(absence.createdAt, DateTime.parse('2025-01-01'));
@@ -39,7 +39,7 @@ void main() {
 
     test('should support equality comparison', () {
       final absence1 = Absence(
-        admitterId: '123',
+        admitterId: 123,
         admitterNote: 'Approved leave',
         confirmedAt: DateTime.parse('2025-01-01'),
         createdAt: DateTime.parse('2025-01-01'),
@@ -55,7 +55,7 @@ void main() {
       );
 
       final absence2 = Absence(
-        admitterId: '123',
+        admitterId: 123,
         admitterNote: 'Approved leave',
         confirmedAt: DateTime.parse('2025-01-01'),
         createdAt: DateTime.parse('2025-01-01'),
@@ -71,7 +71,7 @@ void main() {
       );
 
       final absence3 = Absence(
-        admitterId: '456',
+        admitterId: 456,
         admitterNote: 'Rejected leave',
         confirmedAt: DateTime.parse('2025-01-02'),
         createdAt: DateTime.parse('2025-01-01'),

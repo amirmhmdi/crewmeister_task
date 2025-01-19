@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('AbsencesList', () {
     final absence = Absence(
-      admitterId: '123',
+      admitterId: 123,
       admitterNote: 'Approved leave',
       confirmedAt: DateTime.parse('2025-01-01'),
       createdAt: DateTime.parse('2025-01-01'),

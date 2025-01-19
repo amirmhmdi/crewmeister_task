@@ -9,7 +9,7 @@ part 'absence_model.g.dart';
 
 @JsonSerializable()
 class AbsenceModel {
-  String? admitterId;
+  int? admitterId;
   String admitterNote;
   String? confirmedAt;
   String createdAt;
