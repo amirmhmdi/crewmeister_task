@@ -9,6 +9,7 @@ import 'package:crewmeister_task/features/absents/domain/entities/member.dart';
 import 'package:crewmeister_task/features/absents/domain/entities/members_list.dart';
 import 'package:crewmeister_task/features/absents/domain/usecases/fetch_absence_list_api_usecase.dart';
 import 'package:crewmeister_task/features/absents/domain/usecases/fetch_member_list_api_usecase.dart';
+import 'package:crewmeister_task/features/absents/domain/usecases/send_email_with_ics_usecase.dart';
 import 'package:crewmeister_task/features/absents/presentation/blocs/absence_bloc/absence_bloc.dart';
 
 import 'package:dartz/dartz.dart';
@@ -19,17 +20,22 @@ class MockFetchAbsenceListApiUsecase extends Mock implements FetchAbsenceListApi
 
 class MockFetchMemberListApiUsecase extends Mock implements FetchMemberListApiUsecase {}
 
+class MockSendEmailWithICSUsecase extends Mock implements SendEmailWithICSUsecase {}
+
 void main() {
   late AbsenceBloc absenceBloc;
   late MockFetchAbsenceListApiUsecase mockFetchAbsenceListApiUsecase;
   late MockFetchMemberListApiUsecase mockFetchMemberListApiUsecase;
+  late MockSendEmailWithICSUsecase mockSendEmailWithICSUsecase;
 
   setUp(() {
     mockFetchAbsenceListApiUsecase = MockFetchAbsenceListApiUsecase();
     mockFetchMemberListApiUsecase = MockFetchMemberListApiUsecase();
+    mockSendEmailWithICSUsecase = MockSendEmailWithICSUsecase();
     absenceBloc = AbsenceBloc(
       fetchAbsenceListApiUsecase: mockFetchAbsenceListApiUsecase,
       fetchMemberListApiUsecase: mockFetchMemberListApiUsecase,
+      sendEmailWithICSUsecase: mockSendEmailWithICSUsecase,
     );
   });
 
