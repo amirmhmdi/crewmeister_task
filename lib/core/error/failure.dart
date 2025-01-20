@@ -12,3 +12,7 @@ abstract class Failure extends Equatable {
 class ServerFailure extends Failure {
   const ServerFailure(super.message);
 }
+
+class EmailFailure extends Failure {
+  const EmailFailure(super.message);
+}

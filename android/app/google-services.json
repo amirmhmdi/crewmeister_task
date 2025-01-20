@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "425773566334",
+    "project_id": "crewmeisterabsencetest-b0979",
+    "storage_bucket": "crewmeisterabsencetest-b0979.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:425773566334:android:2a6a14edf55ba969548b2f",
+        "android_client_info": {
+          "package_name": "com.example.crewmeister_task"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "425773566334-nnt68348na9osbra6n7af9sul3tl8up1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhEqydYIqYCCpKtNi8GSguo6Vc0Hg9C-4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "425773566334-nnt68348na9osbra6n7af9sul3tl8up1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

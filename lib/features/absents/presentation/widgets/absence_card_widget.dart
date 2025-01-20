@@ -1,6 +1,9 @@
 import 'package:crewmeister_task/features/absents/domain/entities/absence.dart';
 import 'package:crewmeister_task/features/absents/domain/entities/enums/absent_status.dart';
+import 'package:crewmeister_task/features/absents/presentation/blocs/absence_bloc/absence_bloc.dart';
+import 'package:crewmeister_task/features/absents/presentation/widgets/absence_get_email_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class AbsenceCardWidget extends StatefulWidget {
   final Absence absence;
@@ -83,6 +86,42 @@ class _AbsenceCardWidgetState extends State<AbsenceCardWidget> {
                             'Admitter Note: ${widget.absence.admitterNote}',
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
+                        const SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            OutlinedButton(
+                              onPressed: () async {
+                                String? email = await showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return GetEmailDialogWidget();
+                                  },
+                                );
+
+                                if (email != null) {
+                                  GetIt.I<AbsenceBloc>().add(
+                                    AbsenceListSentEmailWithICSEvent(
+                                      absence: widget.absence,
+                                      email: email,
+                                    ),
+                                  );
+                                }
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text('Share .ICS file by Email'),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                    child: Icon(Icons.attach_email_outlined),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        )
                       ],
                     ),
                   ],

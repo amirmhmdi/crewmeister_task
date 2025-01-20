@@ -37,3 +37,12 @@ final class AbsenceUpdateFiltersListState extends AbsenceState {
   @override
   List<Object> get props => [];
 }
+
+final class AbsenceEmailSentStatusState extends AbsenceState {
+  final Absence absence;
+  final bool status;
+  const AbsenceEmailSentStatusState({required this.absence, required this.status});
+
+  @override
+  List<Object> get props => [];
+}

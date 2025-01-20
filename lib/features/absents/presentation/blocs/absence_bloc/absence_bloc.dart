@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:bloc/bloc.dart';
 import 'package:crewmeister_task/core/error/failure.dart';
 import 'package:crewmeister_task/features/absents/domain/entities/absence.dart';
@@ -8,6 +10,7 @@ import 'package:crewmeister_task/features/absents/domain/entities/member.dart';
 import 'package:crewmeister_task/features/absents/domain/entities/members_list.dart';
 import 'package:crewmeister_task/features/absents/domain/usecases/fetch_absence_list_api_usecase.dart';
 import 'package:crewmeister_task/features/absents/domain/usecases/fetch_member_list_api_usecase.dart';
+import 'package:crewmeister_task/features/absents/domain/usecases/send_email_with_ics_usecase.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +21,7 @@ part 'absence_state.dart';
 class AbsenceBloc extends Bloc<AbsenceEvent, AbsenceState> {
   final FetchAbsenceListApiUsecase fetchAbsenceListApiUsecase;
   final FetchMemberListApiUsecase fetchMemberListApiUsecase;
+  final SendEmailWithICSUsecase sendEmailWithICSUsecase;
   AbsencesList? _absencesList;
   int page = 1;
   List<Absence> showingAbsenceList = [];
@@ -26,12 +30,14 @@ class AbsenceBloc extends Bloc<AbsenceEvent, AbsenceState> {
   AbsenceBloc({
     required this.fetchAbsenceListApiUsecase,
     required this.fetchMemberListApiUsecase,
+    required this.sendEmailWithICSUsecase,
   }) : super(AbsenceLoadingState()) {
     on<AbsenceEvent>(
       (AbsenceEvent event, Emitter<AbsenceState> emit) async {
         if (event is AbsenceListFetchEvent) return absenceListFetch(event, emit);
         if (event is AbsenceListLoadmoreEvent) return absenceListLoadmore(event, emit);
         if (event is AbsenceFilterEvent) return absenceFilter(event, emit);
+        if (event is AbsenceListSentEmailWithICSEvent) return absenceSendEmailWithICS(event, emit);
       },
     );
   }
@@ -87,6 +93,19 @@ class AbsenceBloc extends Bloc<AbsenceEvent, AbsenceState> {
     emit(AbsenceloadedState(absenceList: absenceListWithPagination, totalAbcenceCount: showingAbsenceList.length));
   }
 
+  Future<void> absenceSendEmailWithICS(AbsenceListSentEmailWithICSEvent event, Emitter<AbsenceState> emit) async {
+    Uint8List uint8list = icsByteFileBuilder(event.absence);
+
+    Either<Failure, bool> result = await sendEmailWithICSUsecase.call(uint8list, event.email);
+    return result.fold(
+      (Failure emailFailure) {
+        emit(AbsenceEmailSentStatusState(absence: event.absence, status: false));
+      },
+      (bool result) {
+        emit(AbsenceEmailSentStatusState(absence: event.absence, status: true));
+      },
+    );
+  }
   ///////////////////////////////////////////////////////////
   // Functions
 
@@ -125,6 +144,29 @@ class AbsenceBloc extends Bloc<AbsenceEvent, AbsenceState> {
     } else {
       return false;
     }
+  }
+
+  Uint8List icsByteFileBuilder(Absence absence) {
+    final icsContent = '''
+BEGIN:VCALENDAR
+VERSION:2.0
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:${absence.id}
+DTSTAMP:${_formatDateTime(DateTime.now())}
+DTSTART:${_formatDateTime(absence.startDate)}
+DTEND:${_formatDateTime(absence.endDate)}
+SUMMARY:Absence - ${absence.memberInfo?.name ?? "User not exist"} - ${absence.type.name} 
+DESCRIPTION:${absence.admitterNote}
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR
+  ''';
+    return Uint8List.fromList(icsContent.codeUnits);
+  }
+
+  String _formatDateTime(DateTime dateTime) {
+    return '${dateTime.toUtc().toIso8601String().replaceAll('-', '').replaceAll(':', '').split('.')[0]}Z';
   }
 
   @visibleForTesting

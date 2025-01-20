@@ -11,6 +11,15 @@ final class AbsenceListFetchEvent extends AbsenceEvent {}
 
 final class AbsenceListLoadmoreEvent extends AbsenceEvent {}
 
+final class AbsenceListSentEmailWithICSEvent extends AbsenceEvent {
+  final Absence absence;
+  final String email;
+
+  const AbsenceListSentEmailWithICSEvent({required this.absence, required this.email});
+  @override
+  List<Object> get props => [];
+}
+
 final class AbsenceFilterEvent extends AbsenceEvent {
   final FilterAbsence selectedFilter;
 

@@ -49,9 +49,31 @@ class _AbsenceListScreenState extends State<AbsenceListScreen> {
           child: BotomAppbarWidget(),
         ),
       ),
-      body: BlocBuilder<AbsenceBloc, AbsenceState>(
+      body: BlocConsumer<AbsenceBloc, AbsenceState>(
+        listenWhen: (previous, current) => (current is AbsenceEmailSentStatusState) ? true : false,
+        listener: (context, state) {
+          if (state is AbsenceEmailSentStatusState) {
+            if (state.status == true) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('.ics Email sent Succesfully :)'),
+                  backgroundColor: Colors.green,
+                ),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('An Error eccured by sending .ics Email'),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
+          }
+        },
         buildWhen: (previous, current) {
           if (previous is AbsenceLoadingState && current is AbsenceLoadingState) {
+            return false;
+          } else if (current is AbsenceEmailSentStatusState) {
             return false;
           } else {
             return true;

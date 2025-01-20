@@ -22,6 +22,7 @@ class BotomAppbarWidget extends StatelessWidget {
               child: Row(
                 children: [
                   BlocBuilder<AbsenceBloc, AbsenceState>(
+                    buildWhen: (previous, current) => (current is AbsenceEmailSentStatusState) ? false : true,
                     builder: (context, state) {
                       if (state is AbsenceloadedState) {
                         return Text(

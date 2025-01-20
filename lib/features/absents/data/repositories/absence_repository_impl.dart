@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:crewmeister_task/core/error/failure.dart';
 import 'package:crewmeister_task/features/absents/data/datasources/absence_datasource.dart';
 import 'package:crewmeister_task/features/absents/data/models/absences_list_model.dart';
@@ -41,6 +42,16 @@ class AbsenceRepositoryImpl extends AbsenceRepository {
       }
     } catch (e) {
       return Left(ServerFailure('Somethings were wrong'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> sendEmailWithICS(Uint8List icsFileByte, String email) async {
+    bool response = await absenceDatasource.sendEmailWithICS(icsFileByte, email);
+    if (response == true) {
+      return Right(true);
+    } else {
+      return Left(EmailFailure('.ics File failed to send'));
     }
   }
 }
