@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:crewmeister_task/core/services/locator.dart';
 import 'package:crewmeister_task/core/services/theme_config.dart';
 import 'package:crewmeister_task/features/absents/presentation/blocs/absence_bloc/absence_bloc.dart';
 import 'package:crewmeister_task/features/absents/presentation/pages/absence_list_screen.dart';
+import 'package:crewmeister_task/features/absents/presentation/pages/absence_list_screen_not_mobile.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -25,7 +29,11 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Crew Meister',
         theme: themeData,
-        home: const AbsenceListScreen(),
+        home: kIsWeb
+            ? AbsenceListNotMobileScreen()
+            : (Platform.isAndroid || Platform.isIOS)
+                ? AbsenceListScreen()
+                : AbsenceListNotMobileScreen(),
       ),
     );
   }

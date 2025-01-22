@@ -22,29 +22,43 @@ class AbsenceBloc extends Bloc<AbsenceEvent, AbsenceState> {
   final FetchAbsenceListApiUsecase fetchAbsenceListApiUsecase;
   final FetchMemberListApiUsecase fetchMemberListApiUsecase;
   final SendEmailWithICSUsecase sendEmailWithICSUsecase;
+  final _isSinglePageApproch;
   AbsencesList? _absencesList;
-  int page = 1;
+  int _currentPageIndex = 1;
   List<Absence> showingAbsenceList = [];
   FilterAbsence chosenFilter = FilterAbsence(absenceType: AbsentType.all, startDate: null, endDate: null);
+
+  int getCurrentPageIndex() => _currentPageIndex;
+
+  int getTotalPages() {
+    if (showingAbsenceList.length % 10 == 0) {
+      return (showingAbsenceList.length / 10).toInt();
+    } else {
+      return (showingAbsenceList.length / 10).toInt() + 1;
+    }
+  }
 
   AbsenceBloc({
     required this.fetchAbsenceListApiUsecase,
     required this.fetchMemberListApiUsecase,
     required this.sendEmailWithICSUsecase,
-  }) : super(AbsenceLoadingState()) {
+    required dynamic isSinglePageApproch,
+  })  : _isSinglePageApproch = isSinglePageApproch,
+        super(AbsenceLoadingState()) {
     on<AbsenceEvent>(
       (AbsenceEvent event, Emitter<AbsenceState> emit) async {
         if (event is AbsenceListFetchEvent) return absenceListFetch(event, emit);
         if (event is AbsenceListLoadmoreEvent) return absenceListLoadmore(event, emit);
         if (event is AbsenceFilterEvent) return absenceFilter(event, emit);
         if (event is AbsenceListSentEmailWithICSEvent) return absenceSendEmailWithICS(event, emit);
+        if (event is AbsenceListLoadSingelageEvent) return absenceListLoadSingelPage(event, emit);
       },
     );
   }
 
   Future<void> absenceListFetch(AbsenceListFetchEvent event, Emitter<AbsenceState> emit) async {
     emit(AbsenceLoadingState());
-    page = 1;
+    _currentPageIndex = 1;
     Either<Failure, AbsencesList> result = await fetchAbsenceListApiUsecase.call();
     return result.fold(
       (Failure failureResult) {
@@ -66,14 +80,14 @@ class AbsenceBloc extends Bloc<AbsenceEvent, AbsenceState> {
   }
 
   Future<void> absenceListLoadmore(AbsenceListLoadmoreEvent event, Emitter<AbsenceState> emit) async {
-    page++;
+    _currentPageIndex++;
     List<Absence> absenceListWithPagination = pagination();
     emit(AbsenceloadedState(absenceList: absenceListWithPagination, totalAbcenceCount: showingAbsenceList.length));
   }
 
   Future<void> absenceFilter(AbsenceFilterEvent event, Emitter<AbsenceState> emit) async {
     emit(AbsenceLoadingState());
-    page = 1;
+    _currentPageIndex = 1;
     chosenFilter = event.selectedFilter;
     showingAbsenceList = List.from(_absencesList?.payload ?? []);
     emit(AbsenceUpdateFiltersListState());
@@ -106,6 +120,12 @@ class AbsenceBloc extends Bloc<AbsenceEvent, AbsenceState> {
       },
     );
   }
+
+  Future<void> absenceListLoadSingelPage(AbsenceListLoadSingelageEvent event, Emitter<AbsenceState> emit) async {
+    _currentPageIndex = event.page;
+    List<Absence> absenceListWithPagination = pagination();
+    emit(AbsenceloadedState(absenceList: absenceListWithPagination, totalAbcenceCount: showingAbsenceList.length));
+  }
   ///////////////////////////////////////////////////////////
   // Functions
 
@@ -135,11 +155,18 @@ class AbsenceBloc extends Bloc<AbsenceEvent, AbsenceState> {
   }
 
   List<Absence> pagination() {
-    return showingAbsenceList.sublist(0, (page * 10) > showingAbsenceList.length ? showingAbsenceList.length : (page * 10));
+    if (_isSinglePageApproch) {
+      return showingAbsenceList.sublist(
+        (_currentPageIndex == 1) ? 0 : (_currentPageIndex - 1) * 10,
+        (_currentPageIndex * 10) > showingAbsenceList.length ? showingAbsenceList.length : (_currentPageIndex * 10),
+      );
+    } else {
+      return showingAbsenceList.sublist(0, (_currentPageIndex * 10) > showingAbsenceList.length ? showingAbsenceList.length : (_currentPageIndex * 10));
+    }
   }
 
   bool enableLoadmore(int listLength) {
-    if (listLength >= page * 10) {
+    if (listLength >= _currentPageIndex * 10) {
       return true;
     } else {
       return false;

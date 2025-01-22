@@ -30,3 +30,12 @@ final class AbsenceFilterEvent extends AbsenceEvent {
   @override
   List<Object> get props => [];
 }
+
+final class AbsenceListLoadSingelageEvent extends AbsenceEvent {
+  final int page;
+
+  const AbsenceListLoadSingelageEvent({required this.page});
+
+  @override
+  List<Object> get props => [page];
+}
