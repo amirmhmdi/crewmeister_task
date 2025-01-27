@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 class CustomDialog extends StatefulWidget {
+  const CustomDialog({super.key});
+
   @override
-  _CustomDialogState createState() => _CustomDialogState();
+  State<CustomDialog> createState() => _CustomDialogState();
 }
 
 class _CustomDialogState extends State<CustomDialog> {

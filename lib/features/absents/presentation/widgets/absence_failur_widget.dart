@@ -1,6 +1,5 @@
 import 'package:crewmeister_task/features/absents/presentation/blocs/absence_bloc/absence_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 
 class AbsenceFailurWidget extends StatelessWidget {

@@ -5,8 +5,8 @@ import 'package:get_it/get_it.dart';
 
 class PageViewIndicatorWidget extends StatelessWidget {
   const PageViewIndicatorWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   void onNextPage(int index) => GetIt.I<AbsenceBloc>().add(AbsenceListLoadSingelageEvent(page: index));
   void onPreviousPage(int index) => GetIt.I<AbsenceBloc>().add(AbsenceListLoadSingelageEvent(page: index));

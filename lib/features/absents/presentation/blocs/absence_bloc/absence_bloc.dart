@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:crewmeister_task/core/error/failure.dart';
 import 'package:crewmeister_task/features/absents/domain/entities/absence.dart';
 import 'package:crewmeister_task/features/absents/domain/entities/absences_list.dart';
@@ -22,7 +22,7 @@ class AbsenceBloc extends Bloc<AbsenceEvent, AbsenceState> {
   final FetchAbsenceListApiUsecase fetchAbsenceListApiUsecase;
   final FetchMemberListApiUsecase fetchMemberListApiUsecase;
   final SendEmailWithICSUsecase sendEmailWithICSUsecase;
-  final _isSinglePageApproch;
+  final bool _isSinglePageApproch;
   AbsencesList? _absencesList;
   int _currentPageIndex = 1;
   List<Absence> showingAbsenceList = [];

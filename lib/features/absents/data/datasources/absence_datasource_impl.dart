@@ -59,7 +59,7 @@ class AbsenceDatasourceImpl implements AbsenceDatasource {
       ));
 
     try {
-      final SendReport sendReport = await send(message, smtpServer, timeout: Duration(seconds: 10));
+      await send(message, smtpServer, timeout: Duration(seconds: 10));
       return true;
     } catch (e) {
       return false;
