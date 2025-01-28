@@ -20,9 +20,9 @@ class _AbsenceListScreenState extends State<AbsenceListScreen> {
   late RefreshController _refreshController;
   @override
   void initState() {
+    super.initState();
     GetIt.I<AbsenceBloc>().add(AbsenceListFetchEvent());
     _refreshController = RefreshController(initialRefresh: false);
-    super.initState();
   }
 
   @override

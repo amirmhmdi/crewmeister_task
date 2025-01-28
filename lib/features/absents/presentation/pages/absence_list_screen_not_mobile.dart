@@ -19,8 +19,8 @@ class AbsenceListNotMobileScreen extends StatefulWidget {
 class _AbsenceListNotMobileScreenState extends State<AbsenceListNotMobileScreen> {
   @override
   void initState() {
-    GetIt.I<AbsenceBloc>().add(AbsenceListFetchEvent());
     super.initState();
+    GetIt.I<AbsenceBloc>().add(AbsenceListFetchEvent());
   }
 
   @override

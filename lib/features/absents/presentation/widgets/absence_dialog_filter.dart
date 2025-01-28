@@ -18,10 +18,10 @@ class _CustomDialogState extends State<CustomDialog> {
 
   @override
   void initState() {
+    super.initState();
     selectedabsentType = GetIt.I<AbsenceBloc>().chosenFilter.absenceType;
     selectedStartDate = GetIt.I<AbsenceBloc>().chosenFilter.startDate;
     selectedEndDate = GetIt.I<AbsenceBloc>().chosenFilter.endDate;
-    super.initState();
   }
 
   @override
