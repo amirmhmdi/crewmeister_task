@@ -14,7 +14,7 @@ class AbsenceCardWidget extends StatefulWidget {
   });
 
   @override
-  _AbsenceCardWidgetState createState() => _AbsenceCardWidgetState();
+  State<AbsenceCardWidget> createState() => _AbsenceCardWidgetState();
 }
 
 class _AbsenceCardWidgetState extends State<AbsenceCardWidget> {

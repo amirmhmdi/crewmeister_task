@@ -36,6 +36,7 @@ void main() {
       fetchAbsenceListApiUsecase: mockFetchAbsenceListApiUsecase,
       fetchMemberListApiUsecase: mockFetchMemberListApiUsecase,
       sendEmailWithICSUsecase: mockSendEmailWithICSUsecase,
+      isSinglePageApproch: true,
     );
   });
 

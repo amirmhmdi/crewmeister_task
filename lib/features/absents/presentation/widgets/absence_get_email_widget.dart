@@ -4,11 +4,11 @@ class GetEmailDialogWidget extends StatefulWidget {
   const GetEmailDialogWidget({super.key});
 
   @override
-  _GetEmailDialogWidgetState createState() => _GetEmailDialogWidgetState();
+  State<GetEmailDialogWidget> createState() => _GetEmailDialogWidgetState();
 }
 
 class _GetEmailDialogWidgetState extends State<GetEmailDialogWidget> {
-  TextEditingController _emailController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

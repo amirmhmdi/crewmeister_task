@@ -3,6 +3,7 @@ import 'package:crewmeister_task/features/absents/domain/entities/enums/absent_t
 import 'package:crewmeister_task/features/absents/domain/entities/member.dart';
 import 'package:equatable/equatable.dart';
 
+// ignore: must_be_immutable
 class Absence extends Equatable {
   final int? admitterId;
   final String admitterNote;

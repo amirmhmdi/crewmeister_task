@@ -1,28 +1,26 @@
 import 'package:crewmeister_task/features/absents/presentation/blocs/absence_bloc/absence_bloc.dart';
-import 'package:crewmeister_task/features/absents/presentation/widgets/absence_card_widget.dart';
+import 'package:crewmeister_task/features/absents/presentation/widgets/abcence_pageview_indicator_widget.dart';
+import 'package:crewmeister_task/features/absents/presentation/widgets/abcence_table_widget.dart';
 import 'package:crewmeister_task/features/absents/presentation/widgets/absence_dialog_filter.dart';
 import 'package:crewmeister_task/features/absents/presentation/widgets/absence_failur_widget.dart';
 import 'package:crewmeister_task/features/absents/presentation/widgets/absence_loading_widget.dart';
 import 'package:crewmeister_task/features/absents/presentation/widgets/bottom_appbar_widget.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
-class AbsenceListScreen extends StatefulWidget {
-  const AbsenceListScreen({super.key});
+class AbsenceListNotMobileScreen extends StatefulWidget {
+  const AbsenceListNotMobileScreen({super.key});
 
   @override
-  State<AbsenceListScreen> createState() => _AbsenceListScreenState();
+  State<AbsenceListNotMobileScreen> createState() => _AbsenceListNotMobileScreenState();
 }
 
-class _AbsenceListScreenState extends State<AbsenceListScreen> {
-  late RefreshController _refreshController;
+class _AbsenceListNotMobileScreenState extends State<AbsenceListNotMobileScreen> {
   @override
   void initState() {
     super.initState();
     GetIt.I<AbsenceBloc>().add(AbsenceListFetchEvent());
-    _refreshController = RefreshController(initialRefresh: false);
   }
 
   @override
@@ -49,27 +47,7 @@ class _AbsenceListScreenState extends State<AbsenceListScreen> {
           child: BotomAppbarWidget(),
         ),
       ),
-      body: BlocConsumer<AbsenceBloc, AbsenceState>(
-        listenWhen: (previous, current) => (current is AbsenceEmailSentStatusState) ? true : false,
-        listener: (context, state) {
-          if (state is AbsenceEmailSentStatusState) {
-            if (state.status == true) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('.ics Email sent Succesfully :)'),
-                  backgroundColor: Colors.green,
-                ),
-              );
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('An Error eccured by sending .ics Email'),
-                  backgroundColor: Colors.red,
-                ),
-              );
-            }
-          }
-        },
+      body: BlocBuilder<AbsenceBloc, AbsenceState>(
         buildWhen: (previous, current) {
           if (previous is AbsenceLoadingState && current is AbsenceLoadingState) {
             return false;
@@ -91,22 +69,11 @@ class _AbsenceListScreenState extends State<AbsenceListScreen> {
                 ),
               );
             }
-            _refreshController.loadComplete();
-            _refreshController.refreshCompleted();
-            return SmartRefresher(
-              enablePullDown: true,
-              enablePullUp: GetIt.I<AbsenceBloc>().enableLoadmore(state.absenceList.length),
-              controller: _refreshController,
-              onRefresh: _onRefresh,
-              onLoading: GetIt.I<AbsenceBloc>().enableLoadmore(state.absenceList.length) == true ? _onLoading : null,
-              child: ListView.builder(
-                itemCount: state.absenceList.length,
-                itemBuilder: (context, index) {
-                  return AbsenceCardWidget(
-                    absence: state.absenceList[index],
-                  );
-                },
-              ),
+            return ListView(
+              children: [
+                AbsencesTabelWidget(absencesList: state.absenceList),
+                PageViewIndicatorWidget(),
+              ],
             );
           } else if (state is AbsenceFailurState) {
             return AbsenceFailurWidget(errorMessage: state.errorMessage);
@@ -116,19 +83,5 @@ class _AbsenceListScreenState extends State<AbsenceListScreen> {
         },
       ),
     );
-  }
-
-  _onRefresh() {
-    GetIt.I<AbsenceBloc>().add(AbsenceListFetchEvent());
-  }
-
-  _onLoading() {
-    GetIt.I<AbsenceBloc>().add(AbsenceListLoadmoreEvent());
-  }
-
-  @override
-  void dispose() {
-    _refreshController.dispose();
-    super.dispose();
   }
 }
